@@ -16,7 +16,11 @@ class ChaptersController < ApplicationController
   end
 
   def d3
-    render nothing: true
+    # comment the following line to use static library instead
+    return redirect_to ActionController::Base.helpers.asset_path 'd3.v3.js'
+
+    prepend_view_path "d3"
+    render file: 'd3.v3.js', content_type: Mime::JS.to_s
   end
 
   private
