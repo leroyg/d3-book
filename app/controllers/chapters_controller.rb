@@ -15,6 +15,10 @@ class ChaptersController < ApplicationController
     render template: params[:section]
   end
 
+  def d3
+    render nothing: true
+  end
+
   private
     def prepend_view_paths
       prepend_view_path "chapter_#{params[:id]}"

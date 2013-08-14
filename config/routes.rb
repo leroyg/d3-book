@@ -4,6 +4,8 @@ D3Book::Application.routes.draw do
   match 'chapter_:id' => 'chapters#index', as: :chapter, via: :get
   match 'chapter_:id/:section' => 'chapters#section', via: :get
 
+  match 'd3/:file' => 'chapters#d3', constraints: {file: /[^\/]+/}, via: :get
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
