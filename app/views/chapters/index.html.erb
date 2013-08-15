@@ -5,10 +5,5 @@
     </ul>
   <% end %>
 <% elsif @sections %>
-  <h3>Chapter <%=params[:id]%></h3>
-  <% @sections.each do |s| %>
-    <ul>
-      <%= link_to s, File.join(root_url,s) %>
-    </ul>
-  <% end %>
+  <%= render 'sections' %>
 <% end %>

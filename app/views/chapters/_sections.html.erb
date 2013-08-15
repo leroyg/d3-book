@@ -1,0 +1,15 @@
+<h3>
+  <%= link_to "Chapter #{params[:id]}", chapter_url(params[:id]) %> | <%= link_to "Home", root_url %>
+</h3>
+
+<% short_link ||= false %>
+
+<% @sections.each_with_index do |s,i| %>
+  <% unless short_link %>
+    <ul>
+      <%= link_to s, File.join(root_url,s) %>
+    </ul>
+  <% else %>
+    <%= link_to i+1, File.join(root_url,s), title: s %>
+  <% end %>
+<% end %>

@@ -2,7 +2,7 @@ D3Book::Application.routes.draw do
   root :to => 'chapters#index'
   resources :chapters, only: :index
   match 'chapter_:id' => 'chapters#index', as: :chapter, via: :get
-  match 'chapter_:id/:section' => 'chapters#section', via: :get
+  match 'chapter_:id/:section' => 'chapters#show', via: :get
 
   match 'd3/:file' => 'chapters#d3', constraints: {file: /[^\/]+/}, via: :get
 
