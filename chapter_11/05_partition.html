@@ -18,41 +18,30 @@
 		<script type="text/javascript">
 
 		  var matrix =
-{
- "name": "flare",
- "children": [
-  {
-   "name": "analytics",
-   "children": [
-    {
-     "name": "cluster",
-     "children": [
-      {"name": "AgglomerativeCluster", "size": 3938},
-      {"name": "CommunityStructure", "size": 3812},
-      {"name": "HierarchicalCluster", "size": 6714},
-      {"name": "MergeEdge", "size": 743}
-     ]
-    },
-    {
-     "name": "graph",
-     "children": [
-      {"name": "BetweennessCentrality", "size": 3534},
-      {"name": "LinkDistance", "size": 5731},
-      {"name": "MaxFlowMinCut", "size": 7840},
-      {"name": "ShortestPaths", "size": 5914},
-      {"name": "SpanningTree", "size": 3416}
-     ]
-    },
-    {
-     "name": "optimization",
-     "children": [
-      {"name": "AspectRatioBanker", "size": 7074}
-     ]
-    }
-   ]
-  }
- ]
-}
+		    {
+		      "name": "All",
+		      "children": [
+		        {
+		          "name": "business",
+		          "children": [
+		            {"subject": "AgglomerativeCluster", "date": 'Dec 12'},
+		            {"subject": "CommunityStructure", "date": '01/01/2010'}
+		          ]
+		        },
+		        {
+		          "name": "technical",
+		          "children": [
+		            {"subject": "BetweennessCentrality"}
+		          ]
+		        },
+		        {
+		          "name": "others",
+		          "children": [
+		            {"subject": "AspectRatioBanker", "link": "http://www.google.com"}
+		          ]
+		        }
+		      ]
+		    }
 
 
 			var w = 1120,
@@ -69,7 +58,13 @@
 			    .attr("height", h);
 
 			var partition = d3.layout.partition()
-			    .value(function(d) { return d.size; });
+			    .value(function(d) {
+			    	if (d.hasOwnProperty('size')) {
+							return d.size;
+			    	} else {
+			    		return 1;
+			    	}
+			    });
 
 			var g = vis.selectAll("g")
 		      .data(partition.nodes(matrix))
@@ -85,11 +80,25 @@
 		      .attr("height", function(d) { return d.dx * ky; })
 		      .attr("class", function(d) { return d.children ? "parent" : "child"; });
 
-		  g.append("svg:text")
+			t = g.append("svg:a")
+		  		.attr("xlink:href", function(d) { return d.link;} )
+
+		  t.append("svg:text")
 		      .attr("transform", transform)
 		      .attr("dy", ".35em")
 		      .style("opacity", function(d) { return d.dx * ky > 12 ? 1 : 0; })
-		      .text(function(d) { return d.name; })
+		      .text(function(d) {
+		        if (d.hasOwnProperty('subject')) {
+		        	if (d.hasOwnProperty('date')) {
+		          	return [d.subject, '(', d.date, ')'].join(" ");
+		          } else {
+		          	return d.subject;
+		          }
+		        } else {
+		          return d.name;
+		        };
+		      })
+
 
 		  d3.select(window)
 		      .on("click", function() { click(matrix); })
