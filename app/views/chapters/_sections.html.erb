@@ -7,9 +7,9 @@
 <% @sections.each_with_index do |s,i| %>
   <% unless short_link %>
     <ul>
-      <%= link_to s, File.join(root_url,s) %>
+      <%= link_to s, File.join(root_url,s), 'data-no-turbolink' => true %>
     </ul>
   <% else %>
-    <%= link_to i+1, File.join(root_url,s), title: s %>
+    <%= link_to i+1, File.join(root_url,s), title: s, 'data-no-turbolink' => true %>
   <% end %>
 <% end %>
